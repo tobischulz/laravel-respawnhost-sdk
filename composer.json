@@ -8,15 +8,19 @@
         "gameserver",
         "api-client"
     ],
-    "homepage": "https://respawnhost.com",
+    "homepage": "https://github.com/tobischulz/laravel-respawnhost-sdk",
     "license": "MIT",
     "authors": [
         {
-            "name": "RespawnHost",
-            "homepage": "https://respawnhost.com",
-            "role": "Maintainer"
+            "name": "Tobi Schulz",
+            "homepage": "https://github.com/tobischulz",
+            "role": "Developer"
         }
     ],
+    "support": {
+        "issues": "https://github.com/tobischulz/laravel-respawnhost-sdk/issues",
+        "source": "https://github.com/tobischulz/laravel-respawnhost-sdk"
+    },
     "require": {
         "php": "^8.4",
         "illuminate/contracts": "^11.0||^12.0",
@@ -70,5 +74,6 @@
             }
         }
     },
-    "prefer-stable": true
+    "prefer-stable": true,
+    "minimum-stability": "stable"
 }

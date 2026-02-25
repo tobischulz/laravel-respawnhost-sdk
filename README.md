@@ -105,7 +105,7 @@ Recommended: keep separate keys per app/environment and rotate them regularly.
 Use the facade:
 
 ```php
-use RespawnHost\LaravelSdk\Facades\RespawnHost;
+use TobiSchulz\LaravelRespawnHostSdk\Facades\RespawnHost;
 
 $servers = RespawnHost::servers()->all(['page' => 1, 'limit' => 10]);
 $server = RespawnHost::servers()->find('server-uuid');
@@ -120,7 +120,7 @@ RespawnHost::servers()->sendCommand('server-uuid', [
 You can call server rent directly via facade with typed parameters:
 
 ```php
-use RespawnHost\LaravelSdk\Facades\RespawnHost;
+use TobiSchulz\LaravelRespawnHostSdk\Facades\RespawnHost;
 
 $result = RespawnHost::rent(
     gameShort: 'enshrouded', // required
@@ -151,7 +151,7 @@ These endpoints are fetched through the SDK without requiring `RESPAWNHOST_API_K
 Usage:
 
 ```php
-use RespawnHost\LaravelSdk\Facades\RespawnHost;
+use TobiSchulz\LaravelRespawnHostSdk\Facades\RespawnHost;
 
 // list<CatalogGame>
 $games = RespawnHost::allGames();
@@ -165,8 +165,8 @@ $packages = RespawnHost::packagesByGameShort('v-rising');
 
 These methods return immutable DTO-style classes:
 
-- `RespawnHost\LaravelSdk\Models\CatalogGame`
-- `RespawnHost\LaravelSdk\Models\CatalogGamePackage`
+- `TobiSchulz\LaravelRespawnHostSdk\Models\CatalogGame`
+- `TobiSchulz\LaravelRespawnHostSdk\Models\CatalogGamePackage`
 
 Payments and transactions:
 
@@ -191,7 +191,7 @@ $response = RespawnHost::request(
 Error handling:
 
 ```php
-use RespawnHost\LaravelSdk\Exceptions\RespawnHostRequestException;
+use TobiSchulz\LaravelRespawnHostSdk\Exceptions\RespawnHostRequestException;
 
 try {
     RespawnHost::transactions()->all();
