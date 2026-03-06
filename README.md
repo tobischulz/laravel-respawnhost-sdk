@@ -1,5 +1,7 @@
 # Laravel RespawnHost SDK
 
+[![Tests](https://github.com/tobischulz/laravel-respawnhost-sdk/actions/workflows/tests.yml/badge.svg)](https://github.com/tobischulz/laravel-respawnhost-sdk/actions/workflows/tests.yml)
+
 Laravel package to integrate with the official [RespawnHost API](https://developers.respawnhost.com/api-reference) and manage game servers from your application.
 
 ## Current scope
