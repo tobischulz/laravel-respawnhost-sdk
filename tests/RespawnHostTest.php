@@ -33,6 +33,64 @@ it('throws a dedicated exception for failed api requests', function (): void {
     expect(fn () => RespawnHost::transactions()->all())->toThrow(RespawnHostRequestException::class);
 });
 
+it('finds a server without includePanelServer query by default', function (): void {
+    Http::fake([
+        'https://respawnhost.com/api/v1/servers/server-uuid' => Http::response(['id' => 'server-uuid'], 200),
+    ]);
+
+    $server = RespawnHost::servers()->find('server-uuid');
+
+    expect($server)->toBe(['id' => 'server-uuid']);
+
+    Http::assertSent(function (Request $request): bool {
+        $query = parse_url($request->url(), PHP_URL_QUERY);
+
+        return $request->method() === 'GET'
+            && $request->url() === 'https://respawnhost.com/api/v1/servers/server-uuid'
+            && ($query === null || $query === '');
+    });
+});
+
+it('can include panel server data when requested', function (): void {
+    Http::fake([
+        'https://respawnhost.com/api/v1/servers/server-uuid*' => Http::response(['id' => 'server-uuid'], 200),
+    ]);
+
+    $server = RespawnHost::servers()->find('server-uuid', true);
+
+    expect($server)->toBe(['id' => 'server-uuid']);
+
+    Http::assertSent(function (Request $request): bool {
+        parse_str((string) parse_url($request->url(), PHP_URL_QUERY), $query);
+        $includePanelServer = $query['includePanelServer'] ?? null;
+
+        return $request->method() === 'GET'
+            && str_starts_with($request->url(), 'https://respawnhost.com/api/v1/servers/server-uuid')
+            && is_string($includePanelServer)
+            && $includePanelServer === '1';
+    });
+});
+
+it('can explicitly disable panel server data flag', function (): void {
+    Http::fake([
+        'https://respawnhost.com/api/v1/servers/server-uuid*' => Http::response(['id' => 'server-uuid'], 200),
+    ]);
+
+    $server = RespawnHost::servers()->find('server-uuid', false);
+
+    expect($server)->toBe(['id' => 'server-uuid']);
+
+    Http::assertSent(function (Request $request): bool {
+        parse_str((string) parse_url($request->url(), PHP_URL_QUERY), $query);
+        $includePanelServer = $query['includePanelServer'] ?? null;
+
+        return $request->method() === 'GET'
+            && str_starts_with($request->url(), 'https://respawnhost.com/api/v1/servers/server-uuid')
+            && is_string($includePanelServer)
+            && $includePanelServer === '0';
+    });
+});
+
 it('rents a server through the facade wrapper with typed parameters', function (): void {
     Http::fake([
         'https://respawnhost.com/api/v1/servers/rent' => Http::response(['success' => true], 200),

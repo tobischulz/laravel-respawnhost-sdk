@@ -21,9 +21,15 @@ class ServersResource
     /**
      * @return array<int|string, mixed>
      */
-    public function find(string $uuid): array
+    public function find(string $uuid, ?bool $includePanelServer = null): array
     {
-        return $this->client->request('GET', "/servers/{$uuid}");
+        $query = [];
+
+        if ($includePanelServer !== null) {
+            $query['includePanelServer'] = $includePanelServer;
+        }
+
+        return $this->client->request('GET', "/servers/{$uuid}", query: $query);
     }
 
     /**

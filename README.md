@@ -109,6 +109,7 @@ use TobiSchulz\LaravelRespawnHostSdk\Facades\RespawnHost;
 
 $servers = RespawnHost::servers()->all(['page' => 1, 'limit' => 10]);
 $server = RespawnHost::servers()->find('server-uuid');
+$serverWithPanelData = RespawnHost::servers()->find('server-uuid', includePanelServer: true);
 
 RespawnHost::servers()->sendCommand('server-uuid', [
     'command' => 'say Hello from Laravel SDK',
